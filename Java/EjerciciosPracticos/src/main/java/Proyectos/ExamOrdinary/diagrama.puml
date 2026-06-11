@@ -1,0 +1,50 @@
+@startuml
+
+enum EstadoMensaje {
+    DIFUNDIDO
+    PENDIENTE
+    BLOQUEADO
+}
+
+abstract class Comunicado {
+    - id: String
+    - texto: String
+    - valoracionPrioridad: Integer
+    - estado: EstadoMensaje
+    + abstract leer(): void
+}
+
+class EventoFestivo {
+    - ubicacion: String
+    - gratuito: boolean
+    + aplicarRuido(): void
+}
+
+class NoticiaHuelga {
+}
+
+class InfoMutxamelApp {
+    - static comunicadosEmitidos: Collection<Comunicado>
+    + static main(args: String[]): void
+    + static generarRuidoPositivo(): void
+    + static mostrarComunicados(): void
+    + static insertarComunicado(): void
+    + static redactarComunicado(String texto): Comunicado
+    + static revisarComunicadosHuelga(): void
+    + static limpiarCriticas(): void
+    + static generarEstadisticas(): void
+}
+
+interface AccionPolitica {
+    + evaluarRiesgo() : boolean
+    + tramitar(): void
+    + censurar(): void
+}
+
+' Relaciones
+Comunicado <|-- EventoFestivo
+Comunicado <|-- NoticiaHuelga
+NoticiaHuelga ..|> AccionPolitica
+InfoMutxamelApp *--> Comunicado
+
+@enduml

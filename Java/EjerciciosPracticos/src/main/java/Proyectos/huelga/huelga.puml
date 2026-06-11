@@ -1,0 +1,50 @@
+@startuml
+class AppHuelga {
+    - static CentroEducativo centro
+    + static main(args: String[])
+    + static verSeguimiento(): void
+    + static validacion(): Docente
+    + static insertarHuelguista() : void
+    + static calcularDescuentoSalarial(): void
+    + static abandonarHuelga(): void
+    + static listadoConselleria(): void
+    + static generarEstadisticas(): void
+
+}
+
+class CentroEducativo {
+    - nombre: String
+    - plantillaTotal: int
+    - descuentoSalarialDiario: double
+    - huelguistas: Collection<Docente>
+    + generarHuelguistasAleatorios(): void
+    + mostrarHuelguistasActuales(): void
+    + validarDocente(dni: String): Docente
+    + sortearServiciosMinimos(): void
+    + limpiarRegistro(): void
+}
+
+class Docente {
+    - dni: String
+    - diasHuelga: Integer
+    - estado: EstadoDocente
+}
+
+interface AccionesHuelga {
+    + secundar(): void
+    + asignarServiciosMinimos(): void
+    + finalizar(): void
+}
+
+enum EstadoDocente {
+    ACTIVO
+    EN_HUELGA
+    SERVICIOS_MINIMOS
+}
+
+' Relaciones basadas en el examen original
+CentroEducativo *--> Docente
+Docente ..|> AccionesHuelga
+Docente --> EstadoDocente
+
+@enduml
