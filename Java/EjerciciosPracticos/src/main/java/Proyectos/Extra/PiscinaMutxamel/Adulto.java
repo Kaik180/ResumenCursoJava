@@ -1,7 +1,6 @@
-package Proyectos.Extra;
+package main.java.Proyectos.Extra.PiscinaMutxamel;
 
 public class Adulto extends Bañista {
-
     public Adulto(Integer numero, String nombre, int edad, TipoUsuario tipo) {
         super(numero, nombre, edad, tipo);
     }

@@ -1,0 +1,41 @@
+@startuml
+
+enum EstadoPeregrino {
+    SOLICITUD_OK
+    EN_COLA
+    BENDECIDO
+}
+
+abstract class Peregrino {
+    - numReserva: Integer
+    - nombre: String
+    - estado: EstadoPeregrino
+}
+
+class Nacional {
+    - provincia: String
+}
+
+class Extranjero {
+    - pais: String
+}
+
+interface AccionProtocolaria {
+    + recibirBesico(): void
+}
+
+class VaticanoApp {
+    - static registrados: Collection<Peregrino>
+    - static fila: Collection<Peregrino>
+    + static main(args: String[]): void
+    + static llegadaPeregrino(): void
+    + static buscarPeregrino(id: Integer): Peregrino
+    + static bendicionPapal(): void
+}
+
+Peregrino <|-- Nacional
+Peregrino <|-- Extranjero
+Peregrino ..|> AccionProtocolaria
+VaticanoApp --> Peregrino
+
+@enduml

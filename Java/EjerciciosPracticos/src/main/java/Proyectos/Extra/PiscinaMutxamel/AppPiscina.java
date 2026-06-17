@@ -1,4 +1,4 @@
-package Proyectos.Extra;
+package main.java.Proyectos.Extra.PiscinaMutxamel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,14 +6,13 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class AppPiscina {
-    // a) Atributos estáticos solicitados
+    // Atributos estáticos solicitados en el diseño estructural
     private static ArrayList<Bañista> listaBañistas = new ArrayList<>();
-    private static int ultimoNumero = 0; // Lleva el control automático del ID secuencial
-
+    private static int ultimoNumero = 0;
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Inicialización de datos de prueba corregidos (según apartado f)
+        // Carga de los registros de prueba (Apartado f) con IDs válidos y secuenciales
         ultimoNumero++;
         listaBañistas.add(new Adulto(ultimoNumero, "patricia", 20, TipoUsuario.ADULTO));
         ultimoNumero++;
@@ -27,21 +26,21 @@ public class AppPiscina {
         ultimoNumero++;
         listaBañistas.add(new Invitado(ultimoNumero, "Marta", 12, TipoUsuario.INVITADO, LocalDate.now()));
 
-        // Ejemplo de ejecución del alta de usuario
+        // 1. Demostración interactiva de alta de usuario
         try {
             altaUsuario();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        // Demostración de listado de invitados
+        // 2. Demostración del método mostrarInvitados() del día
         mostrarInvitados();
 
-        // Demostración de borrado de invitados diarios
+        // 3. Demostración del método eliminarInvitados() antes del cierre
         eliminarInvitados();
     }
 
-    // b) Método altaUsuario()
+    // b) Método de gestión para dar de alta nuevos Bañistas
     public static void altaUsuario() {
         System.out.println("*** APP DE MANTENIMIENTO DE LA PISCINA DE MUTXAMEL ***");
         System.out.println("Alta de usuarios...");
@@ -58,21 +57,19 @@ public class AppPiscina {
         System.out.print("Introduce la edad: ");
         int edad = Integer.parseInt(scanner.nextLine().trim());
 
-        // d) Validar edad menor a 0 usando captura previa o provocando la excepción encapsulada
+        // d) Interceptar de manera controlada errores por ingreso de años negativos
         if (edad < 0) {
             System.out.println("ERROR. No puede insertar bañistas que no han nacido.");
             return;
         }
 
-        // b) Auto-incremento de número secuencial y único
         int nuevoId = ultimoNumero + 1;
-
         Bañista nuevoBañista = null;
 
         if (opcion == 1) {
             nuevoBañista = new Adulto(nuevoId, nombre, edad, TipoUsuario.ADULTO);
         } else if (opcion == 2) {
-            // b) Lanzar excepción personalizada (RuntimeException) si NIÑO supera los 16 años
+            // b) Lanzamiento obligatorio de RuntimeException si el Niño supera el límite de 16 años
             if (edad > 16) {
                 throw new RuntimeException("ERROR al crear un NIÑO. Edad " + edad + " no permitida");
             }
@@ -80,26 +77,25 @@ public class AppPiscina {
             String tel = scanner.nextLine().trim();
             nuevoBañista = new Niño(nuevoId, nombre, edad, TipoUsuario.NIÑO, tel);
         } else if (opcion == 3) {
-            // b) Si es INVITADO, fecha_visita es la fecha actual
             nuevoBañista = new Invitado(nuevoId, nombre, edad, TipoUsuario.INVITADO, LocalDate.now());
         }
 
         if (nuevoBañista != null) {
             listaBañistas.add(nuevoBañista);
-            ultimoNumero = nuevoId; // Confirmamos la actualización del último ID válido utilizado
+            ultimoNumero = nuevoId; // Se consolida el ID incremental creado con éxito
             System.out.println("Nuevo bañista creado.");
 
-            // c) Lanzar el método cobrar automáticamente antes de finalizar
+            // c) Cobro automatizado acoplado internamente
             cobrar(nuevoBañista);
         }
     }
 
-    // c) Método cobrar(Bañista bañista)
+    // c) Método cobrar delegado
     public static void cobrar(Bañista bañista) {
         bañista.pagar();
     }
 
-    // e) Método mostrarInvitados() del día de hoy
+    // e) Listado filtrado polimórficamente de Invitados en la fecha en curso
     public static void mostrarInvitados() {
         System.out.println("\n*** APP DE MANTENIMIENTO DE LA PISCINA DE MUTXAMEL ***");
         System.out.println("Lista de invitados en el día de hoy:");
@@ -117,7 +113,7 @@ public class AppPiscina {
         }
     }
 
-    // f) Método eliminarInvitados() de hoy usando Iterator para evitar ConcurrentModificationException
+    // f) Borrado seguro mediante Iterator para prevenir un ConcurrentModificationException
     public static void eliminarInvitados() {
         System.out.println("\n*** APP DE MANTENIMIENTO DE LA PISCINA DE MUTXAMEL ***");
         System.out.println("Estado antes de eliminar:");

@@ -1,4 +1,5 @@
-package Proyectos.Extra;
+package main.java.Proyectos.Extra.PiscinaMutxamel;
+
 
 public class Niño extends Bañista {
     private String telefonoContactoAdulto;

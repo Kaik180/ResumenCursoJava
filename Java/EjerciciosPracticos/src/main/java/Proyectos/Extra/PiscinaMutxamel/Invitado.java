@@ -1,4 +1,4 @@
-package Proyectos.Extra;
+package main.java.Proyectos.Extra.PiscinaMutxamel;
 
 import java.time.LocalDate;
 

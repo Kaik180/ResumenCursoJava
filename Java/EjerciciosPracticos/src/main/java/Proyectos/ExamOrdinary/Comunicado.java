@@ -1,4 +1,4 @@
-package Proyectos.ExamOrdinary;
+package main.java.Proyectos.ExamOrdinary;
 
 public abstract class Comunicado implements Comparable<Comunicado> {
 
